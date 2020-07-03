@@ -1,4 +1,8 @@
-import { Component, OnInit,EventEmitter, Output } from '@angular/core';
+import { PostsService } from './../post-list/post.service';
+import { Component, OnInit} from '@angular/core';
+import { Post } from '../post-list/post.model';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-post-create',
@@ -8,7 +12,6 @@ import { Component, OnInit,EventEmitter, Output } from '@angular/core';
 export class PostCreateComponent implements OnInit {
   enteredTitle='';
   enteredContent = "";
-  @Output() postCreated = new EventEmitter();
 
   playAudio(){
     let audio = new Audio();
@@ -17,17 +20,22 @@ export class PostCreateComponent implements OnInit {
     audio.play();
   }
 
-  onAddPost(){
-    const post = {
-      title : this.enteredTitle,
-      content : this.enteredContent}
+  onAddPost(form: NgForm){
+    if (form.invalid) {
+      return;
+    }
+    const post :Post = {
+      title : form.value.title,
+      content : form.value.content}
     this.playAudio();
-    this.postCreated.emit(post);
+    this.postsService.addPost(form.value.title,form.value.content);
   }
 
-  constructor() { }
+  constructor(public postsService:PostsService) { }
 
   ngOnInit() {
   }
+
+
 
 }
