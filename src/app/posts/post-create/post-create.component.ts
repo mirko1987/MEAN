@@ -29,7 +29,6 @@ export class PostCreateComponent implements OnInit {
       content : form.value.content}
     this.playAudio();
     this.postsService.addPost(form.value.title,form.value.content);
-    console.log(form)
   }
 
   constructor(public postsService:PostsService) { }
