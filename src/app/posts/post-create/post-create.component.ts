@@ -29,12 +29,14 @@ export class PostCreateComponent implements OnInit {
       content : form.value.content}
     this.playAudio();
     this.postsService.addPost(form.value.title,form.value.content);
+    form.resetForm();
   }
 
   constructor(public postsService:PostsService) { }
 
   ngOnInit() {
   }
+
 
 
 
