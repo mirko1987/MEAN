@@ -1,8 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require('mongoose');
+
+const Post = require('./models/post');
 
 const app = express();
 
+mongoose.connect("mongodb+srv://mirko:focus.800a@cluster0.jbs1g.mongodb.net/<dbname>?retryWrites=true&w=majority",{useUnifiedTopology: true,useNewUrlParser: true})
+.then(()=>{
+  console.log("connect to database");
+})
+.catch(()=>{
+  console.log("Connection fail!");
+})
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -20,10 +30,14 @@ app.use((req, res, next) => {
 });
 
 app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   console.log(post);
+  post.save();
   res.status(201).json({
-    message: 'Post added successfully'
+    message: 'ciao'
   });
 });
 
@@ -40,10 +54,19 @@ app.get("/api/posts", (req, res, next) => {
       content: "This is coming from the server!"
     }
   ];
-  res.status(200).json({
-    message: "Posts fetched successfully!",
-    posts: posts
+  Post.find().then((documents)=>{
+    res.status(200).json({
+      message: "Posts fetched successfully!",
+      posts: documents
+    });
+    console.log(documents);
   });
+
+});
+
+app.delete("/api/posts/:id",(req,res,next)=>{
+  console.log(req.params.id);
+  res.status(200).json({message:'Post delted'});
 });
 
 module.exports = app;
