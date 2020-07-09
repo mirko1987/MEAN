@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'Indigo';
+  src: url(/assets/indigo/indigo-regular.otf) format("truetype");
+  font-weight:300;
+}
+
+/deep/.mat-toolbar.mat-primary{
+  background:#00a755;
+
+}
+span{
+  padding: 20px;
+}
+
+.container{
+  display: flex;
+  font-family:'Indigo';
+  justify-content: space-between;
+}
+
 ul{
   list-style:none;
   padding:0;
@@ -8,4 +28,5 @@ a {
   text-decoration:none;
   color:white;
   padding:20px;
+  justify-content:flex-end;
 }
