@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
@@ -34,45 +34,40 @@ app.post("/api/posts", (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  console.log(post);
-  post.save().then(createdPost=>{
-    console.log(createdPost)
+  post.save().then(createdPost => {
     res.status(201).json({
-      message: 'ciao',
-      postId:createdPost._id
+      message: "Post added successfully",
+      postId: createdPost._id
     });
+  });
+});
+
+app.put("/api/posts/:id", (req, res, next) => {
+  const post = new Post({
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content
+  });
+  Post.updateOne({ _id: req.params.id }, post).then(result => {
+    console.log(result);
+    res.status(200).json({ message: "Update successful!" });
   });
 });
 
 app.get("/api/posts", (req, res, next) => {
-  const posts = [
-    {
-      id: "fadf12421l",
-      title: "First server-side post",
-      content: "This is coming from the server"
-    },
-    {
-      id: "ksajflaj132",
-      title: "Second server-side post",
-      content: "This is coming from the server!"
-    }
-  ];
-  Post.find().then((documents)=>{
+  Post.find().then(documents => {
     res.status(200).json({
       message: "Posts fetched successfully!",
       posts: documents
     });
-    console.log(documents);
   });
-
 });
 
-app.delete("/api/posts/:id",(req,res,next)=>{
-  Post.deleteOne({_id:req.params.id}).then(result=>{
+app.delete("/api/posts/:id", (req, res, next) => {
+  Post.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
-    console.log(req.params.id);
-  res.status(200).json({message:'Post delted'});
+    res.status(200).json({ message: "Post deleted!" });
   });
-  });
+});
 
 module.exports = app;
