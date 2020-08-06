@@ -7,15 +7,16 @@ const postsRoutes = require("./routes/posts");
 
 const app = express();
 
-mongoose.connect("mongodb+srv://mirko:focus.800a@cluster0.jbs1g.mongodb.net/<dbname>?retryWrites=true&w=majority",{useUnifiedTopology: true,useNewUrlParser: true})
-.then(()=>{
-  console.log("connect to database");
-})
-.catch(()=>{
-  console.log("Connection fail!");
-})
-
-
+mongoose
+  .connect(
+    "mongodb+srv://mirko:focus.800a@cluster0.jbs1g.mongodb.net/<dbname>?retryWrites=true&w=majority",{useUnifiedTopology: true,useNewUrlParser: true}
+  )
+  .then(() => {
+    console.log("Connected to database!");
+  })
+  .catch(() => {
+    console.log("Connection failed!");
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

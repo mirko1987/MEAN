@@ -18,13 +18,20 @@ import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { HeaderComponent } from "./header/header.component";
 import { PostListComponent } from "./posts/post-list/post-list.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    AuthComponent,
+    LoginComponent,
+    SigninComponent,
+
   ],
   imports: [
     BrowserModule,
