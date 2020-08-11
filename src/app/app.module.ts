@@ -1,8 +1,8 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule,FormsModule} from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import {
   MatInputModule,
   MatCardModule,
@@ -18,9 +18,9 @@ import { PostCreateComponent } from "./posts/post-create/post-create.component";
 import { HeaderComponent } from "./header/header.component";
 import { PostListComponent } from "./posts/post-list/post-list.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { AuthComponent } from './auth/auth.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SigninComponent } from './auth/signin/signin.component';
+import { LoginComponent } from "./auth/login/login.component";
+import { SignupComponent } from "./auth/signup/signup.component";
+import { AuthInterceptor } from "./auth/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -28,10 +28,8 @@ import { SigninComponent } from './auth/signin/signin.component';
     PostCreateComponent,
     HeaderComponent,
     PostListComponent,
-    AuthComponent,
     LoginComponent,
-    SigninComponent,
-
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +46,9 @@ import { SigninComponent } from './auth/signin/signin.component';
     MatPaginatorModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
