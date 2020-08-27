@@ -11,7 +11,6 @@ const app = express();
 mongoose
   .connect(
     "mongodb+srv://mirko:1234@cluster0.wj287.mongodb.net/<dbname>?retryWrites=true&w=majority",{useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
-
   )
   .then(() => {
     console.log("Connected to database!");
